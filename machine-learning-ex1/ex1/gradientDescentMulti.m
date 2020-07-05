@@ -34,7 +34,7 @@ for iter = 1:num_iters
 
 
 
-    ; disp("cost:"), disp(computeCostMulti(X, y, theta));
+    % disp("cost:"), disp(computeCostMulti(X, y, theta));
 
 
 
