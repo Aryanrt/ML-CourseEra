@@ -61,7 +61,19 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+y_matrix = eye(num_labels)(y,:); 
+temp2 = [ones(m, 1) X];
 
+hiddens = sigmoid(temp2 * Theta1');
+hiddens = [ones(m,1) hiddens];
+results = sigmoid(hiddens * Theta2');
+
+
+
+temp =  -y_matrix .* log(results) - ((1 .- y_matrix ) .* (log(1 - results)));
+
+J = sum(temp,2);
+J = sum(J)/ m;
 
 
 
