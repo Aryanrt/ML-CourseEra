@@ -75,6 +75,10 @@ temp =  -y_matrix .* log(results) - ((1 .- y_matrix ) .* (log(1 - results)));
 J = sum(temp,2);
 J = sum(J)/ m;
 
+Theta1Reg = sum(sum(Theta1(:,2:end) .* Theta1(:,2:end),2),1);
+Theta2Reg = sum(sum(Theta2(:,2:end) .* Theta2(:,2:end),2),1);
+
+J = J  + lambda * (Theta1Reg+ Theta2Reg)/(2*m);
 
 
 
