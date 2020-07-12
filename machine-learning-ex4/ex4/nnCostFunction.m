@@ -64,13 +64,13 @@ Theta2_grad = zeros(size(Theta2));
 y_matrix = eye(num_labels)(y,:); 
 temp2 = [ones(m, 1) X];
 
-hiddens = sigmoid(temp2 * Theta1');
-hiddens = [ones(m,1) hiddens];
-results = sigmoid(hiddens * Theta2');
+a2 = sigmoid(temp2 * Theta1');
+a2 = [ones(m,1) a2];
+a3 = sigmoid(a2 * Theta2');
 
 
 
-temp =  -y_matrix .* log(results) - ((1 .- y_matrix ) .* (log(1 - results)));
+temp =  -y_matrix .* log(a3) - ((1 .- y_matrix ) .* (log(1 - a3)));
 
 J = sum(temp,2);
 J = sum(J)/ m;
@@ -81,18 +81,17 @@ Theta2Reg = sum(sum(Theta2(:,2:end) .* Theta2(:,2:end),2),1);
 J = J  + lambda * (Theta1Reg+ Theta2Reg)/(2*m);
 
 
+smallDelta3 = a3 - y_matrix;
+smallDelta2 = (smallDelta3 * Theta2) .* a2 .* (1- a2);
 
+BigDeleta2 = a2' * smallDelta3 ;
+Theta2_grad = BigDeleta2'/m;
 
+temp = [ones(m,1) X];
+BigDeleta1 = temp' * smallDelta2(:,2:end);
+Theta1_grad = BigDeleta1'/m;
 
-
-
-
-
-
-
-
-
-
+grad = [Theta1_grad(:); Theta2_grad(:)];
 
 
 
