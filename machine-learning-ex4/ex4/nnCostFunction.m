@@ -91,6 +91,16 @@ temp = [ones(m,1) X];
 BigDeleta1 = temp' * smallDelta2(:,2:end);
 Theta1_grad = BigDeleta1'/m;
 
+
+%regularization
+
+
+
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + (lambda*Theta1(:,2:end))/m;
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + (lambda*Theta2(:,2:end))/m;
+
+%disp(size(Theta2_grad)), disp(size(Theta2));
+
 grad = [Theta1_grad(:); Theta2_grad(:)];
 
 
