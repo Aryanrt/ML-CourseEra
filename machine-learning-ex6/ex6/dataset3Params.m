@@ -23,7 +23,24 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+choices_vec = [0.01 0.03 0.1 0.3 1 3 10 30];
+result = 10000;
 
+for i = 1:length(choices_vec),
+	for j = 1:length(choices_vec),
+		model= svmTrain(X, y, choices_vec(i), @(x1, x2) gaussianKernel(x1, x2, choices_vec(j)));
+		predictions = svmPredict(model, Xval);
+		temp = mean(double(predictions ~= yval));
+		if (temp <  result)
+			result = temp;
+			C = choices_vec(i);
+			sigma = choices_vec(j);
+			disp("c:"),disp(C),disp(" sigma"), disp(sigma);
+		endif;
+
+    endfor;
+endfor;
+disp("End c:"),disp(C),disp(" sigma"), disp(sigma);
 
 
 
