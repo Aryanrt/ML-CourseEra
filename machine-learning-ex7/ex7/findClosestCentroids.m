@@ -22,6 +22,20 @@ idx = zeros(size(X,1), 1);
 %
 
 
+for i=1:size(X,1),
+	min = 100000;
+	index = -1;
+	for j=1:size(centroids),
+		%disp("X"), disp(size(X(i,:))),disp(X(i)),disp("c(j)"), disp(centroids(j)); 
+		temp = sum(( X(i,:) - centroids(j,:)) .^ 2); 
+		if(temp < min) 
+			min = temp;
+			index = j;
+		endif;
+	endfor;
+	idx(i) = index;
+endfor;
+
 
 
 
